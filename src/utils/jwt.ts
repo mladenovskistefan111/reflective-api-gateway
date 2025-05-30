@@ -1,13 +1,11 @@
-// reflective-api-gateway/src/utils/jwt.ts
 import jwt from 'jsonwebtoken';
-import { ApiError } from './errors';
+import { ApiError } from './errors.js';
 
-// Define the expected JWT payload structure
 interface JwtPayload {
   id: number;
   email: string;
   role: string;
-  [key: string]: any; // Allow for additional properties
+  [key: string]: any; 
 }
 
 /**
@@ -23,7 +21,6 @@ export const verifyJwt = (token: string, secret: string): JwtPayload => {
   }
 
   try {
-    // Assert 'secret' as string for 'jwt.verify' overload
     const decoded = jwt.verify(token, secret) as JwtPayload;
     return decoded;
   } catch (error) {
@@ -35,7 +32,6 @@ export const verifyJwt = (token: string, secret: string): JwtPayload => {
       throw new ApiError(401, 'Invalid token');
     }
 
-    // Catch any other unexpected errors during verification
     throw new ApiError(500, 'Failed to verify token due to an internal error.');
   }
 };

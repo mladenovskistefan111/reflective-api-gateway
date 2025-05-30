@@ -1,6 +1,4 @@
-// reflective-api-gateway/src/utils/validation.ts
-import { ApiError } from './errors'; // We'll create ApiError next
-
+import { ApiError } from './errors.js'; 
 /**
  * Validates that essential environment variables are set.
  * Throws an error if any required variable is missing.
@@ -10,8 +8,7 @@ export const validateEnv = (config: any) => {
   const requiredEnvVars = [
     'jwtSecret',
     'authServiceUrl',
-    'taskTrackerServiceUrl',
-    'insightsEngineGrpcUrl'
+    'goalServiceUrl'
   ];
 
   for (const key of requiredEnvVars) {

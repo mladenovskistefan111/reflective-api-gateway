@@ -1,17 +1,12 @@
-// reflective-api-gateway/src/utils/logger.ts
-import pino from 'pino';
-import config from '../config/index'; // Import the config we just created
-
-const logger = pino({
-  level: config.logLevel, // Use log level from config (e.g., 'info', 'debug')
+import { pino } from 'pino';
+export const logger = pino({
+  level: process.env.NODE_ENV === 'production' ? 'info' : 'debug',
   transport: {
-    target: 'pino-pretty', // Use pino-pretty for development-friendly logs
+    target: 'pino-pretty',
     options: {
-      colorize: true,
-      translateTime: 'SYS:HH:MM:ss',
-      ignore: 'pid,hostname', // Ignore pid and hostname in output for cleaner logs
+      colorize: true, 
+      translateTime: 'SYS:standard', 
+      ignore: 'pid,hostname', 
     },
   },
 });
-
-export { logger };

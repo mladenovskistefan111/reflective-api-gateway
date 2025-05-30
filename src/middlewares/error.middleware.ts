@@ -1,9 +1,9 @@
-// reflective-api-gateway/src/middlewares/error.middleware.ts
-import { Request, Response, NextFunction } from 'express';
-import { ApiError } from '../utils/errors';
-import { logger } from '../utils/logger'; // Use the logger we just created
 
-// Global error handling middleware
+import { Request, Response, NextFunction } from 'express';
+import { ApiError } from '../utils/errors.js';
+import { logger } from '../utils/logger.js';
+
+
 const errorMiddleware = (
   err: Error,
   req: Request,
@@ -12,7 +12,7 @@ const errorMiddleware = (
 ) => {
   let error = err;
 
-  // Handle custom API errors
+
   if (error instanceof ApiError) {
     return res.status(error.statusCode).json({
       status: 'error',
@@ -20,11 +20,8 @@ const errorMiddleware = (
     });
   }
 
-  // Handle other types of errors (e.g., unexpected errors)
-  // Log the error for debugging, but don't expose sensitive info to client
   logger.error('Unexpected error:', error);
 
-  // Send a generic 500 Internal Server Error response
   res.status(500).json({
     status: 'error',
     message: 'Something went wrong on the server.',

@@ -1,4 +1,3 @@
-// reflective-api-gateway/src/utils/errors.ts
 export class ApiError extends Error {
     public statusCode: number;
     public isOperational: boolean;

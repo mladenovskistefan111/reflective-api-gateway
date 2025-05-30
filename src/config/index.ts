@@ -1,38 +1,37 @@
-// reflective-api-gateway/src/config/index.ts
-import dotenv from 'dotenv';
-import { validateEnv } from '../utils/validation';
 
-// Load environment variables from .env file
+import dotenv from 'dotenv';
+import { validateEnv } from '../utils/validation.js';
+
+
 dotenv.config();
 
-// Define the expected environment variables and their types
 interface EnvConfig {
   nodeEnv: string;
   port: number;
   jwtSecret: string;
   authServiceUrl: string;
-  taskTrackerServiceUrl: string;
-  insightsEngineGrpcUrl: string;
+  goalServiceUrl: string;
   logLevel: string;
 }
 
-// Validate and load environment variables
+
 const config: EnvConfig = {
   nodeEnv: process.env.NODE_ENV || 'development',
-  port: parseInt(process.env.PORT || '3000', 10), // Gateway will typically run on 3000
-  jwtSecret: process.env.JWT_SECRET || '', // Important for JWT validation
+  port: parseInt(process.env.PORT || '3000', 10),
+  jwtSecret: process.env.JWT_SECRET || '', 
   authServiceUrl: process.env.AUTH_SERVICE_URL || 'http://localhost:3001',
-  taskTrackerServiceUrl: process.env.TASK_TRACKER_SERVICE_URL || 'http://localhost:3002',
-  insightsEngineGrpcUrl: process.env.INSIGHTS_ENGINE_GRPC_URL || 'localhost:50051', // gRPC uses host:port
+
+  goalServiceUrl: process.env.GOAL_SERVICE_URL || 'http://localhost:3002', 
+
   logLevel: process.env.LOG_LEVEL || 'info',
 };
 
-// Perform validation
+
 try {
   validateEnv(config);
 } catch (error: any) {
-  console.error(`❌ Environment validation error: ${error.message}`);
-  process.exit(1); // Exit if essential environment variables are missing
+  console.error(`Environment validation error: ${error.message}`);
+  process.exit(1);
 }
 
 export default config;
